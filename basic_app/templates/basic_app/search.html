@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+{% extends "basic_app/base1.html" %}
+{% load staticfiles %}
+{% block content %}
+
+<!--<head>
+        <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css" >
+</head>
+-->
+<html>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<link href="https://fonts.googleapis.com/css?family=Josefin+Slab&display=swap" rel="stylesheet">
+	   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+       <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+
+<body>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous"></body>
+  <body>             
+<div id="container">
+    <h1 align="center">Search Student's Information</h1>
+    <form class="search-container" action="{% url 'search' %}" method="POST">        <!-- action="/search/"> -->
+        {% csrf_token %}
+        <div class="form-group">
+            <div class="col-lg-5">
+                <input type="text" name="srh" class="form-control" placeholder="Enter to search name">
+            </div>
+            <label class="col-lg-2">
+                <button type="submit" class="btn btn-danger">Search</button>
+            </label>
+        </div>
+    </form><br><br>
+     <div>
+        {% if messages %}
+        <ul class="messages">
+            {% for k in messages %}
+            <li style="color: red">{{ k }}</li>
+            {% endfor %}
+        </ul>
+            {% endif %}
+    </div><br>
+
+    <div style="color:blue">
+          {% if sr %}
+        <tablestyle = width : " 100% "; position : absolute;>
+<table border = "1" id="mytable" class="table  table-striped table-bordered  ">
+        <thead class="thead-dark">
+		<h1> Student Database </h1>
+        	<tr>
+        		<th width = "25%">
+				Name
+			</th>
+         		<th width = "25%">
+				Email id
+			</th>
+            		<th width = "10%">
+				FE Score
+			</th>
+            		<th width = "10%">
+				SE Score
+			</th>
+            		<th width = "10%">
+				TE Score
+			<th width = "5%">
+				Actions
+        <tbody>
+      {% for k in sr %}
+		<tr>
+        	    <td>{{k.FirstName}}</td>
+                <td>{{k.EmailID}}</td>
+                <td>{{k.Fagg_percentage}}</td>
+                <td>{{k.Sagg_percentage}}</td>
+                <td>{{k.Tagg_percentage}}</td>
+                <td>
+                        <a href="/edit/{{k.id}}"class="btn btn-outline-info rounded-circle"><i class="fas fa-user-edit"></i></a><br>
+						<a href="/delete/{{k.id}}" class="btn btn-outline-info rounded-circle">Placed</a>
+						<a href="/per_delete/{{k.id}}"  class="btn btn-border border-danger rounded-circle"><i class="fas fa-trash-alt"></i></a>
+				     </td>
+        </tr>
+        </tbody>
+</table>
+        <hr>
+         {% endfor %}
+        {% endif %}
+
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js">
+</script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.0/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.0/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.0/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
+
+
+<script>
+    $('document').ready(function () {
+  $(document).ready(function () {
+    $('#mytable').DataTable({
+
+     "scrollY": "460px",
+     "scrollCollapse": true,
+      dom: 'lBfrtip',
+      buttons: [{
+          extend: 'copy',
+          text: '<span > Copy <i class="fas fa-copy"></i></span>',
+          className: 'btn btn-outline-info btn-lg mx-sm-3',
+          titleAttr: 'Copy table'
+        },
+        {
+          extend: 'pdfHtml5',
+          download: 'open',
+          text: '<span > Export To Pdf <i class="fa fa-file-pdf-o" aria-hidden="true"></i></span>',
+          className: 'btn btn-outline-danger btn-lg mr-sm-3',
+          titleAttr: 'Export to PDF'
+        },
+        {
+          extend: 'excelHtml5',
+          text: '<span> Export To Excel <i class="fa fa-file-excel-o" aria-hidden="true"></i></span>',
+          className: 'btn btn-outline-success btn-lg mr-sm-3',
+          titleAttr: 'Export to Excel'
+        },
+        {
+          extend: 'csv',
+          text: '<span> Export To CSV <i class="fas fa-file-csv"></i></span>',
+          className: 'btn btn-outline-primary btn-lg mr-sm-3',
+          titleAttr: 'Export to CSV'
+        },
+        {
+          extend: 'print',
+          text: '<span>Print <i class="fa fa-print" aria-hidden="true"></i></span>',
+          className: 'btn btn-outline-secondary btn-lg mr-sm-3 mt-sm-0 mt-2',
+          titleAttr: 'Print',
+
+          exportOptions: {
+            modifier: {
+              selected: null
+            }
+          }
+        }
+      ],
+      select: true
+    });
+  });
+
+});
+</script>
+
+
+
+</body>
+</html>
+{% endblock %}

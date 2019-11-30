@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+{% extends "base1.html" %}
+{% load staticfiles %}
+{% block content %}
+
+
+
+<html>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.btn1 {
+  background-color: Green;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+/* Darker background on mouse-over */
+.btn1:hover {
+  background-color: Black;
+}
+</style>
+
+
+
+
+	<head><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">             </head>
+<tablestyle = width : " 100% "; position : absolute;>
+<table border = "1" class="table  table-striped table-bordered  ">
+		<thead class="thead-dark">
+		<h1 align="center">Placed Student Database </h1>
+        	<tr>
+        		<th width = "25%">
+				Name
+			</th>
+         		<th width = "25%">
+				Email id
+			</th>
+            		<th width = "10%">
+				FE Score
+			</th>
+            		<th width = "10%">
+				SE Score
+			</th>
+            		<th width = "10%">
+				TE Score
+                    </th>
+                <th width = "10%">
+				Aggregate
+			</th>
+				 <th width = "10%">
+				Company
+			</th>
+			<th width = "5%">
+				Actions
+            </th>
+        <tbody>
+        {%for s in scompany %}
+		<tr>
+        	    <td>{{s.FirstName}}</td>
+                <td>{{s.EmailID}}</td>
+                <td>{{s.Fagg_percentage}}</td>
+                <td>{{s.Sagg_percentage}}</td>
+                <td>{{s.Tagg_percentage}}</td>
+                <td>{{s.Total}}</td>
+				<td>{{s.Company_name}}</td>
+                <td>
+                    <a href="/pedit/{{s.id}}" class="btn rounded-circle"><i class="fas fa-user-edit"></i></a>
+                  	<a href="/p_per_delete/{{s.id}}" class="btn btn-outline-danger rounded-circle" ><i class="fas fa-trash-alt"></i></a>
+                </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+</table>
+
+
+<form id="form" class="Student-sort" action="{% url 'searchcompany' %}" method="POST">
+	{% csrf_token %}
+	<input type="text" placeholder="Enter Company name" name="c">
+	<!---
+	<input type="submit" value="Sort" style = " width = 50px; height = 40px; position : absolute; right: 440 px; top : 20; ">
+	-->
+<button  class="btn"><i class="fa fa-search"></i>
+       	Search
+</button>
+</form>
+
+<form class="data-csv1" action="{% url 'data_csv1'  %}" method="post">
+	{% csrf_token %}
+	 <div class="text-center">
+		<button class="btn1"><i class="fa fa-download"></i>
+			Download
+		</button>
+	 </div>
+</form>
+
+
+</body>
+</html>
+
+{% endblock %}

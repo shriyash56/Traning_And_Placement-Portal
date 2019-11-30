@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+{% extends "base1.html" %}
+{% load staticfiles %}
+{% block content %}
+
+<html>
+<body>
+<style>
+
+h2{
+  font-family: Sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: bold;
+  color: blue;
+  text-align: center;
+  text-decoration: underline
+}
+
+table{
+  font-family: verdana;
+  color:white;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: bold;
+  background: linear-gradient(to bottom, #33ccff 0%, #ff99cc 100%);
+  border-collapse: collapse;
+  border: 2px solid #000000;
+
+
+}
+table.inner{
+  border: 10px
+}
+
+ input[type=email], input[type=number]{
+  width: 50%;
+  padding: 6px 12px;
+  margin: 5px 0;
+  box-sizing: border-box;
+}
+
+input[type=submit], input[type=reset]{
+  width: 15%;
+  padding: 8px 12px;
+  margin: 5px 0;
+  box-sizing: border-box;
+}
+
+</style>
+
+</head>
+<body>
+  <div id = "container">
+      <form id="myForm" class="Update-info" action ='/pupdate/{{s_edit.id}}' method="POST">
+  {% csrf_token %}
+<h3>UPDATE STUDENT REGISTRATION FORM</h3>
+<table align="center" cellpadding = "10" >
+
+<!--------------------- First Name ------------------------------------------>
+    <tr>
+<td>First Name</td>
+<td><input type="text" name="FirstName" maxlength="50" value="{{s_edit.FirstName}}" required />
+(Max 50 Characters Allowed)
+<span class="validity"></span>
+</td>
+</tr>
+<!------------------------ Last Name --------------------------------------->
+<tr>
+<td>Last Name</td>
+<td><input type="text" name="LastName" maxlength="50" value="{{s_edit.LastName}}" required />
+(Max 50 Characters Allowed)
+</td>
+</tr>
+<!-------------------------------------------------------->
+
+<tr>
+<td>Email ID</td>
+<td><input type="email" name="EmailID" maxlength="50" value="{{s_edit.EmailID}}" required /></td>
+</tr>
+
+
+    <!-------------------------------
+<tr>
+<td>CURRENT QUALIFICATION <br /><br /><br /><br /><br /><br /><br /></td>
+
+<td>
+<table>
+
+<tr>
+<td align="center"><b>Sl.No.</b></td>
+<td align="center"><b>Examination</b></td>
+<td align="center"><b>Aggregate Percentage</b></td>
+<td align="center"><b>Year of Passing</b></td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>First Year</td>
+<td><input type="text" name="Fagg_percentage" maxlength="30" value="{{s_edit.Fagg_percentage}}" required /></td>
+<td><input type="text" name="F_YroPassing" maxlength="30" value="{{s_edit.F_YroPassing}}"  required /></td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>Second Year</td>
+<td><input type="text" name="Sagg_percentage" maxlength="30" value="{{s_edit.Sagg_percentage}}" required /></td>
+<td><input type="text" name="S_YroPassing" maxlength="30" value="{{s_edit.S_YroPassing}}"  required /></td>
+</tr>
+
+
+<tr>
+<td>3</td>
+<td>Third Year</td>
+<td><input type="text" name="Tagg_percentage" maxlength="30" value="{{s_edit.Tagg_percentage}}" required /></td>
+<td><input type="text" name="T_YroPassing" maxlength="30" value="{{s_edit.T_YroPassing}}" required /></td>
+</tr>
+
+
+
+</table>
+</td>
+</tr>
+----------->
+
+
+<!-------------Total-------------------->
+
+<tr>
+<td>AGGREGATE <br /></td>
+
+<td>
+<table>
+
+<tr>
+  <td>
+    <input type="text" name="Total" min=0 max=100 value="{{s_edit.Total}}" required>
+  </td>
+</tr>
+
+</table>
+</td>
+</tr>
+
+<!--------------------------------------->
+
+<!-------------Company Name-------------------->
+
+<tr>
+<td>Company Name <br /></td>
+
+<td>
+<table>
+
+<tr>
+  <td>
+    <input type="text" name="Company_name" maxlength="30" value="{{s_edit.Company_name}}" required>
+  </td>
+</tr>
+
+</table>
+</td>
+</tr>
+
+<!--------------------------------------->
+
+
+
+
+
+<!----------------------- Submit------------------------------->
+<tr>
+<td colspan="2" align="center">
+<input type="submit" value="Update">
+</td>
+</tr>
+</table>
+
+</form>
+</div>
+</body>
+</html>
+
+ {% endblock %}

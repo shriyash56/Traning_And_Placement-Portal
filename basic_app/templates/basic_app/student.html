@@ -1,0 +1,298 @@
+ <!DOCTYPE html>
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+<!--
+<html>
+<head>
+	<title>student page</title>
+</head>
+<body>
+	<div id = "container">
+		<form class="student-info" action ="{% url 'student_info'%}"method="POST">
+			{% csrf_token %}
+			{{user.username}}
+			<label>Name</label>
+			<input type="text" name="Name" value="">
+			<hr>
+			<label>Email</label>
+			<input type="email" name="Email" value="">
+			<hr>
+			<label>Aggrigate</label>
+			<input type="number" name="Aggrigate" value="">
+			<hr>
+			<button type="submit">Submit</button>
+		</form>
+	</div>
+</body>
+</html>
+-->
+
+<html>
+<head>
+<style>
+  
+h2{
+  font-family: Sans-serif; 
+  font-size: 24px;         
+  font-style: normal; 
+  font-weight: bold; 
+  color: blue;
+  text-align: center; 
+  text-decoration: underline
+}
+
+table{
+  font-family: verdana; 
+  color:white; 
+  font-size: 16px; 
+  font-style: normal;
+  font-weight: bold;
+  background: linear-gradient(to bottom, #33ccff 0%, #ff99cc 100%);  
+  border-collapse: collapse; 
+  border: 2px solid #000000;
+  
+
+}
+table.inner{
+  border: 10px
+}
+
+ input[type=email], input[type=number]{
+  width: 50%;
+  padding: 6px 12px;
+  margin: 5px 0;
+  box-sizing: border-box;
+}
+
+input[type=submit], input[type=reset]{
+  width: 15%;
+  padding: 8px 12px;
+  margin: 5px 0;
+  box-sizing: border-box;
+}
+
+</style>
+
+</head>
+<body>
+  <div id = "container">
+      <form id="myForm" oninput="Total.value=(parseFloat(a.value)+parseFloat(b.value)+parseFloat(c.value))/3" class="student-info" action ="{% url 'student_info'%}"method="POST">
+  {% csrf_token %}
+<h3>STUDENT REGISTRATION FORM</h3>
+<table align="center" cellpadding = "10">
+ <!--------------------------------Username------------------>
+     <tr>
+<td>User Name</td>
+<td><input type="text" name="Username" value="{{user.username}}" maxlength="50"  />
+</td>
+</tr>
+
+<!--------------------- First Name ------------------------------------------>
+    <tr>
+<td>First Name</td>
+<td><input type="text" name="FirstName" maxlength="50" required />
+(Max 50 Characters Allowed)
+<span class="validity"></span>
+</td>
+</tr>
+<!------------------------ Last Name --------------------------------------->
+<tr>
+<td>Last Name</td>
+<td><input type="text" name="LastName" maxlength="50" required />
+(Max 50 Characters Allowed)
+</td>
+</tr>
+<!-------------------------- Email ID ------------------------------------->
+<tr>
+<td>Email ID</td>
+<td><input type="email" name="EmailID" maxlength="50" required /></td>
+</tr>
+<!-------------------------- Mobile Number ------------------------------------->
+    <tr>
+<td>Mobile Number</td>
+<td>
+<input type="tel" name="MobileNumber" pattern="^\d{10}$" required />(format: xxxxxxxxxx)
+
+</td>
+    </tr>
+
+<!---------------------- Gender ------------------------------------->
+<tr>
+<td>Gender</td>
+<td>
+<input type="radio" name="Gender" value="Male" required />
+Male
+<input type="radio" name="Gender" value="Female" required />
+Female
+</td>
+</tr>
+
+<!--------------------------Date Of Birth--------------------------------->
+<!--
+<tr>
+<td>Date of Birth(DOB)</td>
+<td>
+<input type="date" name="BirthDay" min="1995-01-01">
+</td>
+</tr>
+-->
+<!------------------------- Address ---------------------------------->
+<tr>
+<td>Address<br /><br /><br /></td>
+<td><textarea name="Address" rows="10" cols="50" required ></textarea></td>
+</tr>
+<!-------------------------- City ------------------------------------->
+<tr>
+<td>City</td>
+<td><input type="text" name="City" maxlength="50" required />
+</td>
+</tr>
+
+<!--
+----------------------State
+---------------------
+-->
+<tr>
+<td>State</td>
+<td><input type="text" name="State" maxlength="50" placeholder="Maharashtra" required />
+</td>
+</tr>
+
+
+
+
+<!------------------------------ Country --------------------------------->
+<tr>
+<td>Country</td>
+<td><input type="text" name="Country" placeholder="India" required /></td>
+</tr>
+
+<!-----------------------Qualification---------------------------------------->
+
+<tr>
+<td>PAST QUALIFICATION <br /><br /><br /><br /><br /><br /><br /></td>
+ 
+<td>
+<table >
+ 
+<tr>
+<td align="center"><b>Sl.No.</b></td>
+<td align="center"><b>Examination</b></td>
+<td align="center"><b>Board</b></td>
+<td align="center"><b>Percentage</b></td>
+<td align="center"><b>Year of Passing</b></td>
+</tr>
+ 
+<tr>
+<td>1</td>
+<td>Class X</td>
+<td><input type="text" name="ClassX_Board" maxlength="30" required /></td>
+<td align="center"><input id="sc" type="number" name="ClassX_Percentage" min=0 max=100  step="0.001" required /></td>
+<td><input type="text" name="ClassX_YrOfPassing" maxlength="30" required /></td>
+</tr>
+ 
+<tr>
+<td>2</td>
+<td>Class XII</td>
+<td><input type="text" name="ClassXII_Board" maxlength="30" required /></td>
+<td align="center" ><input id="hc" type="number" name="ClassXII_Percentage" min=0 max=100 step="0.001"  required /></td>
+<td><input type="text" name="ClassXII_YrOfPassing" maxlength="30" required /></td>
+</tr>
+
+
+</table>
+ 
+<tr>
+<td>CURRENT QUALIFICATION <br /><br /><br /><br /><br /><br /><br /></td>
+ 
+<td>
+<table >
+ 
+<tr>
+<td align="center"><b>Sl.No.</b></td>
+<td align="center"><b>Examination</b></td>
+<td align="center"><b>Aggregate Percentage</b></td>
+<td align="center"><b>Year of Passing</b></td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>First Year</td>
+<td align="center"><input id="a" type="number" name="Fagg_percentage" min=0 max=100 step="0.001" required /></td>
+<td><input type="text" name="F_YroPassing" maxlength="30" required /></td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>Second Year</td>
+<td align="center"><input id="b" type="number" name="Sagg_percentage" min=0 max=100 step="0.001"  required /></td>
+<td><input type="text" name="S_YroPassing" maxlength="30" required /></td>
+</tr>
+
+
+<tr>
+<td>3</td>
+<td>Third Year</td>
+<td align="center"><input id="c" type="number" name="Tagg_percentage" min=0 max=100 step="0.001" required /></td>
+<td><input type="text" name="T_YroPassing" maxlength="30" required /></td>
+</tr>
+
+
+
+</table>
+</td>
+</tr>
+<!-------------Total-------------------->
+
+<tr>
+<td>AGGREGATE <br /></td>
+
+<td>
+<table>
+
+<tr>
+  <td>
+    <input type="text" name="Total" for="a b c">
+  </td>
+</tr>
+
+</table>
+</td>
+</tr>
+
+<!--------------------------------------->
+
+
+<!----------------------- Submit and Reset ------------------------------->
+<tr>
+<td colspan="2" align="center">
+    <input type="submit">
+     
+<input type="reset" onnclick="myFunction" value="Reset">
+</td>
+</tr>
+</table>
+
+</form>
+</div>
+
+
+<script>
+function myFunction() {
+  document.getElementById("myForm").reset();
+}
+</script>
+
+
+
+
+
+
+</body>
+</html>
+
+
+{% endblock %}
+
+
